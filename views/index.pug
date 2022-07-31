@@ -1,0 +1,13 @@
+h1 Formulario Envio imagenes
+
+div 
+    form(action = "/upload", method="POST", enctype="multipart/form-data")
+        labe Imagen 
+        input(type="file", name="imagen")
+        input(type="submit", value="Enviar")
+
+div 
+    form(action = "/uploadmult", method="POST", enctype="multipart/form-data")
+        labe Imagen 
+        input(type="file", name="imagenes" multiple)
+        input(type="submit", value="Enviar")
