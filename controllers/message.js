@@ -12,11 +12,11 @@ const getPagination = (page, size) => {
 };
 
 const getPagingData = (data, page, limit) => {
-    const { count: totalItems, rows: messages } = data;
+    const { count: totalItems, rows: user } = data;
     const currentPage = page ? +page : 0;
     const totalPages = Math.ceil(totalItems / limit);
   
-    return { totalItems, messages, totalPages, currentPage };
+    return { totalItems, user, totalPages, currentPage };
 };
 
 /**
@@ -70,7 +70,7 @@ exports.createMessage = async (req, res) => {
             "updated_at": null,
             "is_read": 0,
             "conversationId": req.body.conversationId,
-            "userId": req.body.userId
+            "userId": req.userId
         });
 
         if ( !message ) {
@@ -173,42 +173,28 @@ exports.createConversation = async (req, res) => {
             page = req.params.page;
         } 
 
-        var size = 2;
+        var size = 4;
 
         const { limit, offset } = getPagination(page, size);
 
-        /*await Conversation.findAndCountAll({
-            include: [{
-                model: Message,
-                include: [{
-                    model: User,
-                    attributes: ["id", "name"]
-                }],
-                attributes: ["content", "conversationId", "userId"]
-            }],
-            where: { sender_id: userId}, limit, offset 
-        }).then(data => {
-            const response = getPagingData(data, page, limit);
-            res.send(response);
-        })
-        .catch(err => {
-            res.status(500).send({message: err.message || "Some error occurred while retrieving follows."});
-        });*/
-
         await Conversation.findAndCountAll({
-            attributes: ["sender_id", "receptor_id"],
-            where: {sender_id: userId}, limit, offset,
-            include: [{
-                model: Message,
-                attributes: ["content", "conversationId", "userId"]
-            }, {
+            include: [ {
                 model: User,
                 include: [{
                     model: Profile,
                     attributes: ["image_header"],
                 }],
-                attributes: ["id", "name"],
+                attributes: ["id", "name", "email"]
+            },{
+                model: Message,
+                include: [{
+                    model: User,
+                    attributes: ["id", "name", "email"]
+                }],
+                attributes: ["content"]
             }],
+            attributes: ["sender_id", "receptor_id"],
+            where: { sender_id: userId}, limit, offset 
         }).then(data => {
             const response = getPagingData(data, page, limit);
             res.send(response);
