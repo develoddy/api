@@ -12,7 +12,7 @@ const FollowModel = require("./models/follow");
 // const AlbumModel        = require('./models/album');
 // const PostImageModel    = require('./models/postimage');
 // const HeartModel        = require('./models/heart');
-// const CommentModel      = require('./models/comment');
+const CommentModel      = require('./models/comment');
 // const FriendModel       = require('./models/friend');
 const ConversationModel = require('./models/conversation');
 const MessageModel      = require('./models/message');
@@ -39,7 +39,7 @@ const Follow = FollowModel(sequelize, Sequelize);
 // const Album       = AlbumModel(sequelize, Sequelize);
 // const PostImage   = PostImageModel(sequelize, Sequelize);
 // const Heart       = HeartModel(sequelize, Sequelize);
-// const Comment     = CommentModel(sequelize, Sequelize);
+const Comment     = CommentModel(sequelize, Sequelize);
 // const Friend      = FriendModel(sequelize, Sequelize);
 const Conversation= ConversationModel(sequelize, Sequelize);
 const Message     = MessageModel(sequelize, Sequelize);
@@ -268,27 +268,9 @@ const profiles = [
 ];
 
 
-
-// Posts
-//const posts = [
-      // {
-      //       title: "",content: "post 1 eddy",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",
-      //       userId: 1,
-      // },
-      // {
-      //       title: "",content: "post 2 eddy",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",
-      //       userId: 1,
-      // },
-      // {
-      //       title: "",content: "post 3 eddy",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",
-      //       userId: 1,
-      // },
-//];
-
-
 // Images
 const images = [
-  { src:"public/posts/4b6559ff733eaea094375278ead7fb02.png" , title:"4b6559ff733eaea094375278ead7fb02.png" , content: "b02", user_id: 0, level_id: 0, album_id:0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23",  }
+  { src:"public/posts/imga-01.jpg" , title:"imga-01.jpg" , content: "b02", user_id: 0, level_id: 0, album_id:0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23",  }
 ]
 
 // Follows
@@ -321,7 +303,6 @@ const messages = [
       {content: "Hola Eddy, mi nombre es jordan", user_id: 0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23", is_read: 0, conversationId: 2, userId: 2}
       
 ];
-
 
 
 // AUTHENTICATE
@@ -379,8 +360,8 @@ sequelize
                         userId: 1,
 
                         images: [{
-                              src: "public/posts/6aac81b27086618dfd36b4a2ecf8369f.png",
-                              title: "6aac81b27086618dfd36b4a2ecf8369f.png",
+                              src: "public/posts/imag-02.jpg",
+                              title: "imag-02.jpg",
                               content: "69f",
                               user_id: 0,
                               level_id: 0,
@@ -416,8 +397,8 @@ sequelize
                         userId: 1,
 
                         images: [{
-                              src: "public/posts/3a248b12c30e050f25de5f6c1567032b.png",
-                              title: "3a248b12c30e050f25de5f6c1567032b.png",
+                              src: "public/posts/imag-03.jpg",
+                              title: "imag-03.jpg",
                               content: "32b",
                               user_id: 0,
                               level_id: 0,
@@ -425,8 +406,8 @@ sequelize
                               created_at: "2021-12-26 21:47:23",
                               updated_at: "2021-12-26 21:47:23",
                         }, {
-                              src: "public/posts/4b6559ff733eaea094375278ead7fb02.png",
-                              title: "4b6559ff733eaea094375278ead7fb02.png",
+                              src: "public/posts/imag-04.jpg",
+                              title: "imag-04.jpg",
                               content: "b02",
                               user_id: 0,
                               level_id: 0,
@@ -463,8 +444,8 @@ sequelize
                         userId: 1,
 
                         images: [{
-                              src: "public/posts/3a248b12c30e050f25de5f6c1567032b.png",
-                              title: "3a248b12c30e050f25de5f6c1567032b.png",
+                              src: "public/posts/imag-05.jpg",
+                              title: "imag-05.jpg",
                               content: "32b",
                               user_id: 0,
                               level_id: 0,
@@ -502,8 +483,8 @@ sequelize
                         userId: 1,
 
                         images: [{
-                              src: "public/posts/4b6559ff733eaea094375278ead7fb02.png",
-                              title: "4b6559ff733eaea094375278ead7fb02.png",
+                              src: "public/posts/imag-06.jpg",
+                              title: "imag-06.jpg",
                               content: "32b",
                               user_id: 0,
                               level_id: 0,
@@ -525,6 +506,9 @@ sequelize
 
             
       })
+      // .then(() => {
+      //       messages.forEach((message) => Message.create(message) );
+      // })
 
       .catch((err) => {
             console.log("No se conecto a la Base de datos.");
@@ -592,7 +576,23 @@ User.hasMany(Conversation, {foreignKey: 'receptor_id'});
 Conversation.belongsTo(User, {foreignKey: 'sender_id'});
 Conversation.belongsTo(User, {foreignKey: 'receptor_id'});
 
+// 1aN
+// Un post tiene muchos comentarios.
+// Un usuario tiene muchos comentarios.
+// Un comentario puede tener otro comentario (Se guarda el id del comentario superior).
 
+Post.hasMany(Comment);
+User.hasMany(Comment);
+Comment.hasMany(Comment);
+
+// Se añade una clave postId a la tabla Comment
+// Se añade una clave userId a la tabla Comment
+// Se añade una clave commentId a la tabla Comment
+Comment.belongsTo(Post)
+Comment.belongsTo(User);
+Comment.belongsTo(Comment);
+
+// EXPORTACION
 module.exports = {
       Profile,
       Post,
@@ -600,5 +600,6 @@ module.exports = {
       Image,
       Follow,
       Conversation,
-      Message
+      Message,
+      Comment
 };

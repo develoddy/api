@@ -4,7 +4,7 @@ const router = require("express").Router();
 const path = require("path");
 const fs = require("fs");
 const moment = require("moment");
-const { Post, User, Follow, PostImage, Image, Profile } = require("../db");
+const { Post, User, Follow, PostImage, Image, Profile, Comment } = require("../db");
 const { Op } = require("sequelize");
 
 const getPagination = (page, size) => {
@@ -118,6 +118,17 @@ exports.posts = async (req, res) => {
                   }, {
                         model: Image,
                         attributes: ["title", "src"],
+                  },{
+                        model: Comment,
+                        include: [{
+                              model: User,
+                              attributes: ["id", "name", "username", "email"],
+                              include: [{
+                                    model: Profile,
+                                    attributes: ["bio", "image_header"]
+                              }]
+                        }],
+                        attributes: ["id", "userId", "commentId", "content"],
                   }],
                   attributes: ["id", "content", "created_at"],
                   where: { userId: follows_clean },
@@ -126,61 +137,9 @@ exports.posts = async (req, res) => {
                   offset,
             });
 
-            /*const post = await Post.findAndCountAll({
-                  include: [
-                        {
-                              model: User,
-                              attributes: ["id", "name", "username"],
-                        },
-                  ],
-                  where: { userId: follows_clean },
-                  order: [["id", "DESC"]],
-                  limit,
-                  offset,
-            });
-
-            if ( !post ) {
-                  console.log("!post: no hay post");
-                  return res
-                        .status(404)
-                        .send({ message: "Backeden Post: No hay post" });
-            }
-
-           
-            var array_id_posts = [];
-            post.rows.forEach(element => {
-                  array_id_posts.push(element.id);
-            });
-
-            const images = await PostImage.findAll({
-                  include: [
-                        {
-                              model: Image,
-                              attributes: ["src", "title"],
-                              
-                        },
-                  ],
-
-                  attributes: ["postId"],
-                  where: {
-                        post_id: array_id_posts,
-                  }
-            });
-
-
-            const countImages = await PostImage.findAll ({
-                  
-                  attributes: ["post_id", [Sequelize.fn("COUNT", Sequelize.col("post_id")), "totalImages"]],
-                  group: ['post_id'],
-                  where: {
-                        post_id: array_id_posts
-                  }
-            });*/
-
             const response = getPagingData(posts, page, limit);
 
             res.json(response);
-
 
       } catch (err) {
             console.log(err);
@@ -214,7 +173,7 @@ exports.postsUser = async (req, res) => {
                   page = req.params.page;
             }
 
-            var size = 3;
+            var size = 4;
 
             const { limit, offset } = getPagination(page, size);
 
@@ -238,51 +197,6 @@ exports.postsUser = async (req, res) => {
                   offset,
             });
 
-            /*const post = await Post.findAndCountAll({
-                  include: [
-                        {
-                              model: User,
-                              attributes: ["id", "name", "username"],
-                        },
-                        {
-                              model: Profile,
-                              attributes: ["id", "image_header"],
-                        },
-                  ],
-                  where: { author_ref_id: userId },
-                  order: [["id", "DESC"]],
-                  limit,
-                  offset,
-            });
-
-            if (!post) {
-                  console.log("!post: no hay post");
-                  return res
-                        .status(404)
-                        .send({ message: "Backeden Post: No hay post" });
-            }
-
-            
-            var array_id_posts = [];
-            post.rows.forEach(element => {
-                  array_id_posts.push(element.id);
-            });
-
-            const images = await PostImage.findAll({
-                  include: [
-                        {
-                              model: Image,
-                              attributes: ["src", "title"],
-                        },
-                  ],
-
-                  attributes: ["post_id"],
-
-                  where: {
-                        post_id: array_id_posts
-                  }
-            });*/
-
             const response = getPagingData(post, page, limit);
 
             res.json(response);
@@ -296,6 +210,10 @@ exports.postsUser = async (req, res) => {
                   });
       }
 };
+
+
+
+
 
 
 /**
@@ -377,15 +295,9 @@ exports.postsImagesUser = async (req, res) => {
       }
 }
 
-
-
-
-
-
-
-
 /**
  * FIND ONE POST BY ID
+ * @desc Muestra un solor post.
  * @param {req.params.id} req
  * @param {*} res
  * @returns
@@ -393,6 +305,18 @@ exports.postsImagesUser = async (req, res) => {
 exports.post = async (req, res) => {
       try {
             const post = await Post.findOne({
+                  include: [{
+                        model: User,
+                        attributes: ["id", "username"],
+                        include: [{
+                              model: Profile,
+                              attributes: ["bio", "image_header"]
+                        }]
+                  }, {
+                        model: Image,
+                        attributes: ["id", "title", "content", "marginLeft", "link"],
+                  }],
+                  attributes: ["id", "content"],
                   where: { id: req.params.id },
             });
             if (!post) {
@@ -405,6 +329,125 @@ exports.post = async (req, res) => {
             return res
                   .status(500)
                   .send({ message: "Error al devolver la publiación" });
+      }
+};
+
+
+
+
+/**
+ * postsUser
+ * @desc  Paginado de post en el modal profile
+ * @param {*} req 
+ * @param {*} res 
+ * @returns 
+ */
+ exports.postPaginate = async (req, res) => {
+
+      /*try {
+            var userId = req.userId;
+
+            if (req.params.user_id) {
+                  userId = req.params.user_id;
+            }
+
+            if (req.params.page) {
+                  page = req.params.page;
+            }
+
+            var page = 0;
+
+            var size = 1;
+
+            const { limit, offset } = getPagination(page, size);
+
+            const post = await Post.findAndCountAll({
+                  include: [{
+                        model: User,
+                        attributes: ["id", "username"],
+                        include: [{
+                              model: Profile,
+                              attributes: ["bio", "image_header"]
+                        }]
+                  }, {
+                        model: Image,
+                        attributes: ["id", "title", "content", "marginLeft", "link"],
+                  }],
+                  attributes: ["id", "content"],
+                  where: { id: req.params.id_post , userId: userId },
+                  order: [["id", "DESC"]],
+                  limit,
+                  offset,
+            });
+
+            const response = getPagingData(post, page, limit);
+
+            res.json(response);
+
+      } catch (err) {
+            console.log(err);
+            return res
+                  .status(500)
+                  .send({
+                        message: "Backeden Post: Error al devolver posts...",
+                  });
+      }*/
+
+
+
+
+
+      try {
+            var userId = req.userId;
+
+            if (req.params.user_id) {
+                  userId = req.params.user_id;
+            }
+
+            var page = 0;
+
+            if (req.params.page) {
+                  page = req.params.page;
+            }
+
+            var size = 1;
+
+            const { limit, offset } = getPagination(page, size);
+
+            const post = await Post.findAndCountAll({
+                  include: [{
+                        model: User,
+                        attributes: ["id", "username"],
+                        include: [{
+                              model: Profile,
+                              attributes: ["bio", "image_header"]
+                        }]
+                  }, {
+                        model: Image,
+                        attributes: ["id", "title", "content", "marginLeft", "link"],
+                  }],
+                  attributes: ["id", "content"],
+                  where: { id: req.params.id_post },
+                  limit,
+                  offset,
+            });
+            if (!post) {
+                  return res
+                        .status(404)
+                        .send({ message: "No existe la publicación" });
+            }
+
+            const response = getPagingData(post, page, limit);
+
+            res.json(response);
+
+      } catch (err) {
+            console.log(err);
+            return res
+                  .status(500)
+                  .send({
+                        message: "Backeden Post: Error al devolver posts...",
+                  });
       }
 };
 
@@ -451,11 +494,9 @@ exports.upload = async (req, res) => {
                   },
             });
 
-
             if ( !post ) {
                   return res.status(404).send({ message: "No tienes permisos para actualizar la publicación" });
             }
-
 
             if ( req.files == undefined ) {
                   return res.send("You must select a file");
@@ -484,15 +525,7 @@ exports.upload = async (req, res) => {
                   } else {
                         image.addPosts([post])
                   }
-
-                  // var postId = postId;
-                  // var imageId = image.id;
-                  // postimage = await PostImage.create({
-                  //       postId: postId,
-                  //       imageId: imageId,
-                  // });
             }
-
       
             const images = await Post.findAll({
                   include: [{
@@ -504,7 +537,6 @@ exports.upload = async (req, res) => {
             });
 
             return res.status(200).send(images);
-
 
       } catch ( err ) {
             console.log(err);
@@ -532,26 +564,21 @@ exports.upload = async (req, res) => {
       }
 };
 
-/**
- *
- * @param {*} req
- * @param {*} res
- * @returns
- */
-exports.post = async (req, res) => {
-      try {
-            const post = await Post.findOne({
-                  where: { id: req.params.id },
-            });
-            if (!post) {
-                  return res
-                        .status(404)
-                        .send({ message: "No existe la publicación" });
-            }
-            return res.status(200).send({ post });
-      } catch (err) {
-            return res
-                  .status(500)
-                  .send({ message: "Error al devolver la publiación" });
-      }
-};
+
+// exports.post = async (req, res) => {
+//       try {
+//             const post = await Post.findOne({
+//                   where: { id: req.params.id },
+//             });
+//             if (!post) {
+//                   return res
+//                         .status(404)
+//                         .send({ message: "No existe la publicación" });
+//             }
+//             return res.status(200).send({ post });
+//       } catch (err) {
+//             return res
+//                   .status(500)
+//                   .send({ message: "Error al devolver la publiación" });
+//       }
+// };

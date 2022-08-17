@@ -130,16 +130,24 @@ exports.createConversation = async (req, res) => {
         const { limit, offset } = getPagination(page, size);
 
         await Conversation.findAndCountAll({
-            include: [{
+            include: [ {
+                model: User,
+                include: [{
+                    model: Profile,
+                    attributes: ["image_header"],
+                }],
+                attributes: ["id", "name", "email"]
+            },{
                 model: Message,
                 include: [{
                     model: User,
-                    attributes: ["id", "name"]
+                    attributes: ["id", "name", "email"]
                 }],
-                attributes: ["content", "conversationId", "userId"]
+                attributes: ["content"]
             }],
-            where: { receptor_id: userId}, limit, offset 
-
+            attributes: ["sender_id", "receptor_id"],
+            where: { receptor_id: userId}, limit, offset,
+            order: [["id", "DESC"]], 
         }).then(data => {
             const response = getPagingData(data, page, limit);
             res.send(response);
@@ -173,7 +181,7 @@ exports.createConversation = async (req, res) => {
             page = req.params.page;
         } 
 
-        var size = 4;
+        var size = 2;
 
         const { limit, offset } = getPagination(page, size);
 
@@ -194,7 +202,8 @@ exports.createConversation = async (req, res) => {
                 attributes: ["content"]
             }],
             attributes: ["sender_id", "receptor_id"],
-            where: { sender_id: userId}, limit, offset 
+            where: { sender_id: userId}, limit, offset,
+            order: [["id", "DESC"]], 
         }).then(data => {
             const response = getPagingData(data, page, limit);
             res.send(response);

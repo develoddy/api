@@ -10,6 +10,8 @@ router.post('/', middlewares.checkToken, postController.create);
 router.get('/:page?', middlewares.checkToken,  postController.posts);
 router.get('/postimages/:page?', middlewares.checkToken,  postController.postsImagesUser);
 router.get('/user/:user_id/:page?', middlewares.checkToken,  postController.postsUser);
+//router.get('/user/:user_id/:page?', middlewares.checkToken,  postController.postsUser);
+router.get('/one-paginate/:id_post/:page?', middlewares.checkToken,  postController.postPaginate);
 router.get('/one/:id', middlewares.checkToken,  postController.post);
 router.delete('/:id', middlewares.checkToken,  postController.delete);
 router.post('/upload/:postId', middlewares.checkToken,  upload.array('imagenes'), postController.upload);
