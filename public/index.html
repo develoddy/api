@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sockets crud</title>
+</head>
+<body>
+    <form id="userForm">
+        <input type="text" id="name" placeholder="name" value="name">
+        <input type="text" id="lastname" placeholder="lastname" value="lastname">
+        <input type="text" id="username" placeholder="username" value="username">
+        <input type="text" id="email" placeholder="email" value="email">
+        <input type="text" id="password" placeholder="password" value="password">
+        <input type="text" id="code" placeholder="code" value="code">
+        <input type="text" id="is_active" placeholder="is_active" value=0>
+        <input type="text" id="is_admin" placeholder="is_admin" value=0>
+        <input type="text" id="created_at" placeholder="created_at" value="2021-12-26 20:47:23">
+        <input type="text" id="updated_at" placeholder="updated_at" value="2021-12-26 20:47:23">
+        
+        <button>Send</button>
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./main.js" type="module"></script>
+</body>
+</html>
