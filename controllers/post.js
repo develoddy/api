@@ -129,6 +129,7 @@ exports.posts = async (req, res) => {
                               }]
                         }],
                         attributes: ["id", "userId", "commentId", "content"],
+                        
                   }],
                   attributes: ["id", "content", "created_at"],
                   where: { userId: follows_clean },

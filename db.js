@@ -300,8 +300,14 @@ const conversations = [
 const messages = [
       {content: "Hola Jordan, mi nombre es eddy", user_id: 0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23", is_read: 0, conversationId: 1, userId: 1},
       {content: "Hola Jordan, Como te va sigo siendo eddy", user_id: 0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23", is_read: 1, conversationId: 1, userId: 1},
-      {content: "Hola Eddy, mi nombre es jordan", user_id: 0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23", is_read: 0, conversationId: 2, userId: 2}
-      
+      {content: "Hola Eddy, mi nombre es jordan", user_id: 0, created_at: "2021-12-26 21:47:23", updated_at: "2021-12-26 21:47:23", is_read: 0, conversationId: 2, userId: 2}      
+];
+
+
+const comments = [
+      { type_id: 0, ref_id: 0, user_id: 0, content: "Hola eddy", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 2, userId: 2, commentId: 1 }, 
+      { type_id: 0, ref_id: 0, user_id: 0, content: "Hola jordan", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 2, userId: 1, commentId: 1 },
+      { type_id: 0, ref_id: 0, user_id: 0, content: "otro", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 4, userId: 1, commentId: 1 },
 ];
 
 
@@ -340,6 +346,7 @@ sequelize
       .then(() => {
             messages.forEach((message) => Message.create(message) );
       })
+      
       .then(async () => {
 
             let post1 = await Post.create(
@@ -501,14 +508,11 @@ sequelize
                               },
                         ],
                   }
-            );
-
-
-            
+            );    
       })
-      // .then(() => {
-      //       messages.forEach((message) => Message.create(message) );
-      // })
+      /*.then(() => {
+            comments.forEach((comment) => Comment.create(comment));
+      })*/
 
       .catch((err) => {
             console.log("No se conecto a la Base de datos.");

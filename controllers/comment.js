@@ -80,8 +80,25 @@ exports.create = async ( req, res ) => {
 
 exports.read = async ( req, res ) => {
     try {
+        //const comment = await Comment.findAll();
+        //res.json( comment ); 
         const comment = await Comment.findAll();
-        res.json( comment ); 
+
+        var comment_id_clean = [];
+
+        comment.forEach(( element ) => {
+            comment_id_clean.push(element.id);
+        });
+
+    
+        const commentdata = await Comment.findAll({
+            include: [{
+                model: Comment
+            }],
+            where: {commentId: comment_id_clean}
+        });        
+        res.json(commentdata);
+
     } catch {
         res.json("Error de lectura de comentarios...");
     }
