@@ -20,6 +20,8 @@ router.get('/read', middlewares.checkToken, commentController.read);
 // DELETE
 router.delete('/delete/:id', middlewares.checkToken, commentController.delete);
 
+router.get("/forecast", commentController.socketRouter)
+
 
 
 

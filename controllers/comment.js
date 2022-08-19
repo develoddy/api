@@ -115,5 +115,10 @@ exports.delete = async ( req, res ) => {
         res.json("Error de borrado de comentarios...");
         return res.status( 500 ).send({ message: "Error de borrado de comentarios..." });
     }
-
 };
+
+exports.socketRouter = (req, res) => {
+    //io = req.app.get('socketio');
+    // const io = await req.app.get("socket");
+    res.json("data desde el back...");
+}
