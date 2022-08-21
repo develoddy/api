@@ -1,7 +1,4 @@
-
-// Socket Mensajes.
 exports.default = (io) => {
-  
   io.on("connection", function (socket) {
     console.log('A user connected');
 
@@ -10,7 +7,6 @@ exports.default = (io) => {
       io.emit('server:message', `${socket.id.substr(0, 2)} said ${message}`);
       
     });
-  
     socket.on('disconnect', () => {
       console.log('a user disconnected!');
     });
