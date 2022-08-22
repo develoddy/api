@@ -9,6 +9,8 @@ const path = require("path");
 const fs = require("fs");
 const { Op } = require("sequelize");
 
+const socket = require('../sockets');
+
 const getPagination = (page, size) => {
     const limit = size ? +size : 3;
     const offset = page ? page * limit : 0;
@@ -46,7 +48,7 @@ const getPagingData = (data, page, limit) => {
  * 
  */
 
-exports.create = async ( req, res ) => {
+exports.create = async ( req, res) => {
     try {
         console.log(req.body);
         const create = await Comment.create( req.body );
@@ -73,8 +75,8 @@ exports.create = async ( req, res ) => {
         }
         
     } catch ( err ) {
-        console.log(err);
-        res.json("Error create comentario");
+       console.log(err);
+       res.json("Error create comentario");
     }
 };
 
@@ -121,4 +123,5 @@ exports.socketRouter = (req, res) => {
     //io = req.app.get('socketio');
     // const io = await req.app.get("socket");
     res.json("data desde el back...");
+    console.log("data desde el back...");
 }
