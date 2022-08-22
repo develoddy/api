@@ -19,9 +19,21 @@ module.exports =  (io) => {
      - 
      - @param {*} data 
      */
-    const createComment = async ( data ) => {
+    const createComment = async ( data, page, userId  ) => {
         const socket = this; 
-        //io.emit('server:message', `${socket.id.substr(0, 2)} said ${data}`);
+        try {
+            const create = await Comment.create( data );
+            if ( create ) {
+
+                  readComment( page, userId )
+
+            } else {
+                console.log("Not Success");
+            }
+            
+        } catch ( err ) {
+           console.log(err);
+        }
     };
     
     /**
@@ -32,11 +44,6 @@ module.exports =  (io) => {
     
     //const readComment = function (orderId, callback) {
     const readComment = async ( page, userId ) => {  
-
-        /*const users = await User.findAll();
-        io.emit("server:message", users);*/
-     
-    
 
         try {
             console.log("id page: " + page)
@@ -108,19 +115,11 @@ module.exports =  (io) => {
 
             const response = getPagingData(posts, page, limit);
 
-            //res.json(response);
             io.emit("server:message", response);
 
       } catch (err) {
             console.log(err);
-            /*return res
-                  .status(500)
-                  .send({
-                        message: "Backeden Post: Error al devolver posts...",
-                  });*/
       }
-
-
     };
     
 
