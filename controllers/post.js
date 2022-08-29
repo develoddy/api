@@ -212,6 +212,20 @@ exports.postsUser = async (req, res) => {
                   }, {
                         model: Image,
                         attributes: ["id", "title", "content", "marginLeft", "link"],
+                  },{
+                        model: Comment,
+                        include: [{
+                              model: User,
+                              attributes: ["id", "name", "username", "email"],
+                              include: [{
+                                    model: Profile,
+                                    attributes: ["bio", "image_header"]
+                              }]
+                        }],
+                        attributes: ["id", "userId", "commentId", "content" ],
+                        offset: 0,
+                        limit : 2,
+                        
                   }],
                   attributes: ["id", "content"],
                   where: { userId: userId },
@@ -222,7 +236,22 @@ exports.postsUser = async (req, res) => {
 
             const response = getPagingData(post, page, limit);
 
-            res.json(response);
+            // Obtener id de cada publicación.
+            var posts_ids = [];
+
+            response.posts.forEach(( element ) => {
+                  posts_ids.push(element.id);
+            });
+
+            // Contar cuantos comentarios tiene cada publicación
+            const comment_count = await Comment.findAll({
+                  attributes: [ 'postId', [Sequelize.fn('COUNT', 'id'), 'comentarios'] ],
+                  group: ['postId']
+            });
+            
+
+            res.json({ResPostImages:response, commentCounts: comment_count });
+            //res.json(response);
 
       } catch (err) {
             console.log(err);
