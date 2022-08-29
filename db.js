@@ -352,7 +352,7 @@ sequelize
             let post1 = await Post.create(
                   {
                         title: "",
-                        content: "post 1 de eddy con 1 image",
+                        content: "Publicacion 1 de Eddy con 1 sola imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
                         lat: 0,
                         lng: 0,
                         start_at: "2021-12-26 21:47:23",
@@ -389,7 +389,7 @@ sequelize
             let post2 = await Post.create(
                   {
                         title: "",
-                        content: "post 2 eddy con 2 images",
+                        content: "Publicacion 2 de Eddy con 2 imagenes, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
                         lat: 0,
                         lng: 0,
                         start_at: "2021-12-26 21:47:23",
@@ -436,7 +436,7 @@ sequelize
                   {
                         
                         title: "",
-                        content: "post 3 eddy con 1 image",
+                        content: "Publicacion 3 de Eddy con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
                         lat: 0,
                         lng: 0,
                         start_at: "2021-12-26 21:47:23",
@@ -475,7 +475,7 @@ sequelize
                   {
                         
                         title: "",
-                        content: "post 4 eddy con 1 image",
+                        content: "Publicacion 4 de Eddy con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
                         lat: 0,
                         lng: 0,
                         start_at: "2021-12-26 21:47:23",
@@ -508,11 +508,203 @@ sequelize
                               },
                         ],
                   }
-            );    
+            );
+
+            let post5 = await Post.create(
+                  {
+                        
+                        title: "",
+                        content: "Publicacion 1 de Jordam con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
+                        lat: 0,
+                        lng: 0,
+                        start_at: "2021-12-26 21:47:23",
+                        finish_at: "2021-12-26 21:47:23",
+                        receptor_type_id: 0,
+                        author_ref_id: 2,
+                        receptor_ref_id: 0,
+                        level_id: 0,
+                        post_type_id: 0,
+                        created_at: "2021-12-26 21:47:23",
+                        updated_at: "2021-12-26 21:47:23",
+                        userId: 2,
+
+                        images: [{
+                              src: "public/posts/imag-06.jpg",
+                              title: "imag-06.jpg",
+                              content: "32b",
+                              user_id: 0,
+                              level_id: 0,
+                              album_id: 0,
+                              created_at: "2021-12-26 21:47:23",
+                              updated_at: "2021-12-26 21:47:23",
+                        }],
+                        
+                  },
+                  {
+                        include: [
+                              {
+                                    model: Image,
+                              },
+                        ],
+                  }
+            );
+
+            let post6 = await Post.create(
+                  {
+                        
+                        title: "",
+                        content: "Publicacion 1 de Chingo con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
+                        lat: 0,
+                        lng: 0,
+                        start_at: "2021-12-26 21:47:23",
+                        finish_at: "2021-12-26 21:47:23",
+                        receptor_type_id: 0,
+                        author_ref_id: 3,
+                        receptor_ref_id: 0,
+                        level_id: 0,
+                        post_type_id: 0,
+                        created_at: "2021-12-26 21:47:23",
+                        updated_at: "2021-12-26 21:47:23",
+                        userId: 3,
+
+                        images: [{
+                              src: "public/posts/imag-06.jpg",
+                              title: "imag-06.jpg",
+                              content: "32b",
+                              user_id: 0,
+                              level_id: 0,
+                              album_id: 0,
+                              created_at: "2021-12-26 21:47:23",
+                              updated_at: "2021-12-26 21:47:23",
+                        }],
+                        
+                  },
+                  {
+                        include: [
+                              {
+                                    model: Image,
+                              },
+                        ],
+                  }
+            );
+
+            let post7 = await Post.create(
+                  {
+                        
+                        title: "",
+                        content: "Publicacion 1 de Paola con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
+                        lat: 0,
+                        lng: 0,
+                        start_at: "2021-12-26 21:47:23",
+                        finish_at: "2021-12-26 21:47:23",
+                        receptor_type_id: 0,
+                        author_ref_id: 4,
+                        receptor_ref_id: 0,
+                        level_id: 0,
+                        post_type_id: 0,
+                        created_at: "2021-12-26 21:47:23",
+                        updated_at: "2021-12-26 21:47:23",
+                        userId: 4,
+
+                        images: [{
+                              src: "public/posts/imag-06.jpg",
+                              title: "imag-06.jpg",
+                              content: "32b",
+                              user_id: 0,
+                              level_id: 0,
+                              album_id: 0,
+                              created_at: "2021-12-26 21:47:23",
+                              updated_at: "2021-12-26 21:47:23",
+                        }],
+                        
+                  },
+                  {
+                        include: [
+                              {
+                                    model: Image,
+                              },
+                        ],
+                  }
+            );
+
+            let post8 = await Post.create(
+                  {
+                        
+                        title: "",
+                        content: "Publicacion 2 de Paola con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
+                        lat: 0,
+                        lng: 0,
+                        start_at: "2021-12-26 21:47:23",
+                        finish_at: "2021-12-26 21:47:23",
+                        receptor_type_id: 0,
+                        author_ref_id: 4,
+                        receptor_ref_id: 0,
+                        level_id: 0,
+                        post_type_id: 0,
+                        created_at: "2021-12-26 21:47:23",
+                        updated_at: "2021-12-26 21:47:23",
+                        userId: 4,
+
+                        images: [{
+                              src: "public/posts/imag-06.jpg",
+                              title: "imag-06.jpg",
+                              content: "32b",
+                              user_id: 0,
+                              level_id: 0,
+                              album_id: 0,
+                              created_at: "2021-12-26 21:47:23",
+                              updated_at: "2021-12-26 21:47:23",
+                        }],
+                        
+                  },
+                  {
+                        include: [
+                              {
+                                    model: Image,
+                              },
+                        ],
+                  }
+            );
+
+            let post9 = await Post.create(
+                  {
+                        
+                        title: "",
+                        content: "Publicacion 3 de Paola con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",
+                        lat: 0,
+                        lng: 0,
+                        start_at: "2021-12-26 21:47:23",
+                        finish_at: "2021-12-26 21:47:23",
+                        receptor_type_id: 0,
+                        author_ref_id: 4,
+                        receptor_ref_id: 0,
+                        level_id: 0,
+                        post_type_id: 0,
+                        created_at: "2021-12-26 21:47:23",
+                        updated_at: "2021-12-26 21:47:23",
+                        userId: 4,
+
+                        images: [{
+                              src: "public/posts/imag-06.jpg",
+                              title: "imag-06.jpg",
+                              content: "32b",
+                              user_id: 0,
+                              level_id: 0,
+                              album_id: 0,
+                              created_at: "2021-12-26 21:47:23",
+                              updated_at: "2021-12-26 21:47:23",
+                        }],
+                        
+                  },
+                  {
+                        include: [
+                              {
+                                    model: Image,
+                              },
+                        ],
+                  }
+            );
       })
-      /*.then(() => {
-            comments.forEach((comment) => Comment.create(comment));
-      })*/
 
       .catch((err) => {
             console.log("No se conecto a la Base de datos.");

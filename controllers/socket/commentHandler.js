@@ -1,100 +1,49 @@
 const { Post, User, Follow, PostImage, Image, Profile, Comment } = require("../../db");
-const getPagination = (page, size) => {
-    const limit = size ? +size : 3;
-    const offset = page ? page * limit : 0;
-    return { limit, offset };
-};
-
-const getPagingData = (data, page, limit) => {
-    const { count: totalItems, rows: posts } = data;
-    const currentPage = page ? +page : 0;
-    const totalPages = Math.ceil(totalItems / limit);
-
-    return { totalItems, posts, totalPages, currentPage, limit };
-};
-
 
 module.exports =  (io) => {
-    /**
-     - 
-     - @param {*} data 
-     */
-    const createComment = async ( data, page, userId  ) => {
-        const socket = this; 
-        try {
-            const create = await Comment.create( data );
-            if ( create ) {
+    
+      const create = async ( data ) => {
+            const socket = this; 
+            try {
+                  const create = await Comment.create( data );
 
-                  readComment( page, userId )
-
-            } else {
-                console.log("Not Success");
-            }
+                  if ( create ) {
             
-        } catch ( err ) {
-           console.log(err);
-        }
-    };
-    
-    /**
-     * 
-     * @param {*} orderId 
-     * @param {*} callback 
-     */
-    
-    //const readComment = function (orderId, callback) {
-    const readComment = async ( page, userId ) => {  
+                        const comment = await Comment.findAll({
+                            
+                            include: [{
+                                    model: User,
+                                    attributes: ["id", "name", "username", "email"],
+                                    include: [{
+                                        model: Profile,
+                                        attributes: ["bio", "image_header"]
+                                    }]
+                            }],
+                            attributes: ["id", "userId", "commentId", "content"],
+                      
+                            where: { postId: data.postId },
+                        });
+                    
+                        console.log("create:::: ");
+                        console.log(comment);
+                        io.emit("server:newcomment", comment);
+                    } else {
+                        console.log("Not Success");
+                    }
 
-        try {
-            console.log("id page: " + page)
-            console.log("userId: " + userId);
-            var userId = userId;
-
-            var page = 0;
-
-            if ( page ) {
-                  page = page;
+                    
+                  // --
+            
+            } catch ( err ) {
+                  console.log(err);
             }
+      };
 
-            var size = 2;
-
-            const { limit, offset } = getPagination(page, size);
-
-            const follow = await Follow.findAll({
-                  include: [
-                        {
-                              model: User,
-                              attributes: ["id", "name"],
-                        },
-                  ],
-                  where: { user_id: userId },
-            });
-
-            if ( !follow ) {
-                  res.json("No hay follows.");
-            }
-
-            var follows_clean = [];
-
-            follow.forEach(( element ) => {
-                  follows_clean.push(element.followed_id);
-            });
-
-            follows_clean.push(userId);
-
-            const posts = await Post.findAndCountAll({
-                  include: [{
-                        model: User,
-                        attributes: ["id", "name", "username", "email"],
-                        include: [{
-                              model: Profile,
-                              attributes: ["bio", "image_header"]
-                        }]
-                  }, {
-                        model: Image,
-                        attributes: ["title", "src"],
-                  },{
-                        model: Comment,
+      const read = async ( postId) => {  
+            console.log("Server Idpost: " + postId);
+            const socket = this; 
+            try {
+                  const comments = await Comment.findAll({
                         include: [{
                               model: User,
                               attributes: ["id", "name", "username", "email"],
@@ -104,27 +53,43 @@ module.exports =  (io) => {
                               }]
                         }],
                         attributes: ["id", "userId", "commentId", "content"],
-                        
-                  }],
-                  attributes: ["id", "content", "created_at"],
-                  where: { userId: follows_clean },
-                  order: [["id", "DESC"]],
-                  limit,
-                  offset,
-            });
+                        where: { postId: postId }
+                    });        
+                  io.emit("server:comment_read", comments);
+          
+            } catch {
+                  console.log("Error de lectura de comentarios...");
+            }
+      };
 
-            const response = getPagingData(posts, page, limit);
+      //
 
-            io.emit("server:message", response);
+      const update = async ( userId ) => {  
+            try {
+                  // --
+                  // io.emit("server:message", response);
 
-      } catch (err) {
-            console.log(err);
+            } catch (err) {
+                  console.log(err);
+            }
+      };
+
+
+      const delet = async ( userId ) => {  
+            try {
+                  // --
+                  // io.emit("server:message", response);
+
+            } catch (err) {
+                  console.log(err);
+            }
+      };
+
+      
+      return {
+            create,
+            read,
+            update,
+            delet
       }
-    };
-    
-
-    return {
-        createComment,
-        readComment
-    }
   }

@@ -9,7 +9,7 @@ const middlewares = require('../middlewares');
 router.post('/create', middlewares.checkToken, commentController.create);
 
 // READ
-router.get('/read', middlewares.checkToken, commentController.read);
+router.get('/read/:postId/:page?', middlewares.checkToken, commentController.read);
 
 // READ
 //router.get('/:page?', middlewares.checkToken, userController.getUsers);
@@ -20,7 +20,7 @@ router.get('/read', middlewares.checkToken, commentController.read);
 // DELETE
 router.delete('/delete/:id', middlewares.checkToken, commentController.delete);
 
-router.get("/forecast", commentController.socketRouter)
+
 
 
 

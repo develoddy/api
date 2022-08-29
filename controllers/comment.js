@@ -12,7 +12,7 @@ const { Op } = require("sequelize");
 const socket = require('../sockets');
 
 const getPagination = (page, size) => {
-    const limit = size ? +size : 3;
+    const limit = size ? +size : 2;
     const offset = page ? page * limit : 0;
     return { limit, offset };
 };
@@ -21,7 +21,6 @@ const getPagingData = (data, page, limit) => {
     const { count: totalItems, rows: profiles } = data;
     const currentPage = page ? +page : 0;
     const totalPages = Math.ceil(totalItems / limit);
-
     return { totalItems, profiles, totalPages, currentPage };
 };
 
@@ -82,46 +81,55 @@ exports.create = async ( req, res) => {
 
 exports.read = async ( req, res ) => {
     try {
-        //const comment = await Comment.findAll();
-        //res.json( comment ); 
-        const comment = await Comment.findAll();
 
-        var comment_id_clean = [];
+        var page = 0;
 
-        comment.forEach(( element ) => {
-            comment_id_clean.push(element.id);
+        if ( req.params.page ) {
+            
+            page = req.params.page ;
+            console.log("IF size: " + req.params.page);
+        }
+
+        var size = 2;
+        
+        const { limit, offset } = getPagination(page, size);
+
+        const comment = await Comment.findAll({
+            include: [{
+                  model: User,
+                  attributes: ["id", "name", "username", "email"],
+                  include: [{
+                        model: Profile,
+                        attributes: ["bio", "image_header"]
+                  }]
+            }],
+            attributes: ["id", "userId", "commentId", "content"],
+            where: { postId: req.params.postId },
+            //order: [["id", "ASC"]],
+            limit,
+            offset,
         });
 
-    
-        const commentdata = await Comment.findAll({
-            include: [{
-                model: Comment
-            }],
-            where: {commentId: comment_id_clean}
-        });        
-        res.json(commentdata);
+        res.json(comment);
 
-    } catch {
+    } catch (error)  {
+        console.log(error);
         res.json("Error de lectura de comentarios...");
     }
 };
 
 exports.delete = async ( req, res ) => {
     try {
-        const comment = await Comment.destroy({ where: { id: req.params.id } });
-        if ( !comment ) {
-              return res.status(404).send({ message: "No se ha borrado el commentario." });
+        const comment = await Comment.destroy({ 
+            where: { id: req.params.id } 
+        });
+        if ( comment === 0 ) {
+              return res.status(404).send({ message: "No existe el id o hay un error al intentar borrar el commentario!" });
         }
-        return res.status(200).send({ message: "Se ha borrado el commentario con existo!" });
+        return res.status(200).send({ message: "Se ha borrado el commentario con Exito!" });
     } catch (error) {
         res.json("Error de borrado de comentarios...");
         return res.status( 500 ).send({ message: "Error de borrado de comentarios..." });
     }
 };
 
-exports.socketRouter = (req, res) => {
-    //io = req.app.get('socketio');
-    // const io = await req.app.get("socket");
-    res.json("data desde el back...");
-    console.log("data desde el back...");
-}

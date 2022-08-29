@@ -65,11 +65,13 @@ exports.create = async (req, res) => {
       }
 };
 
-/**
- * FIND PAGINATION POST
- * @desc Este metodo me va a devolver todas las publicaciones de los usuarios que yo sigo por pagina.
- * @param {req.userId} req
- * @param {*} res
+
+/*
+ * ---------------- PUBLICACIONES ----------------
+ * Function: posts
+ * Description: Este metodo me va a devolver todas las publicaciones 
+ * de los usuarios que yo sigo por pagina.
+ *
  */
 exports.posts = async (req, res) => {
       try {
@@ -99,6 +101,7 @@ exports.posts = async (req, res) => {
                   res.json("No hay follows.");
             }
 
+            // Follows
             var follows_clean = [];
 
             follow.forEach(( element ) => {
@@ -106,6 +109,9 @@ exports.posts = async (req, res) => {
             });
 
             follows_clean.push(req.userId);
+
+
+            
 
             const posts = await Post.findAndCountAll({
                   include: [{
@@ -128,7 +134,9 @@ exports.posts = async (req, res) => {
                                     attributes: ["bio", "image_header"]
                               }]
                         }],
-                        attributes: ["id", "userId", "commentId", "content"],
+                        attributes: ["id", "userId", "commentId", "content" ],
+                        offset: 0,
+                        limit : 2,
                         
                   }],
                   attributes: ["id", "content", "created_at"],
@@ -139,8 +147,22 @@ exports.posts = async (req, res) => {
             });
 
             const response = getPagingData(posts, page, limit);
+            
+            // Obtener id de cada publicación.
+            var posts_ids = [];
 
-            res.json(response);
+            response.posts.forEach(( element ) => {
+                  posts_ids.push(element.id);
+            });
+
+            // Contar cuantos comentarios tiene cada publicación
+            const comment_count = await Comment.findAll({
+                  attributes: [ 'postId', [Sequelize.fn('COUNT', 'id'), 'comentarios'] ],
+                  group: ['postId']
+            });
+            
+
+            res.json({ResPostImages:response, commentCounts: comment_count });
 
       } catch (err) {
             console.log(err);

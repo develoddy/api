@@ -1,27 +1,18 @@
-// exports.default = (io) => {
-//   io.on("connection", function (socket) {
-//     console.log('A user connected');
+// - SOCKET IO
 
-//     socket.on('cliente:message', (message) => {
-//       console.log(message);
-//       io.emit('server:message', `${socket.id.substr(0, 2)} said ${message}`);
-      
-//     });
-//     socket.on('disconnect', () => {
-//       console.log('a user disconnected!');
-//     });
-//   });
-// };
-
-
-
-// SOCKET IO
 
 
 exports.default = async (io) => {
-    // -- Controladores
-    const { createComment , readComment } = require('./controllers/socket/commentHandler')(io);
-    const { Comment, User, Profile } = require("./db");
+
+    const { Post, User, Follow, PostImage, Image, Profile, Comment } = require("./db");
+
+    // - Comments
+    //const { create, read, update, delete } = require('./controllers/socket/commentHandler')(io);
+
+    // - Posts
+    const { getPosts, createComment, deleteComment } = require('./controllers/socket/postsHandler')(io);
+
+    const { read } = require('./controllers/socket/commentHandler')(io);
 
     /**
      - -------------------------------------------------------------
@@ -29,7 +20,7 @@ exports.default = async (io) => {
      - Se inicializa la conexion del socket entre cliente y servidor
      - -------------------------------------------------------------
      */
-    io.on("connection", function (socket) {
+    io.on("connection", function ( socket ) {
 
         console.log('A user connected');
 
@@ -41,11 +32,10 @@ exports.default = async (io) => {
          - ----------------------------------------------------------------
          */
 
-        socket.on("cliente:message", createComment);
-        socket.on("cliente:readComment", readComment);
-
-
-       
+            // - Posts controller.
+            socket.on('cliente:post_getpost', getPosts);
+            socket.on("cliente:post_createcomment", createComment);
+            socket.on('cliente:post_deleteComment', deleteComment);
 
         /**
          - -------------------------------------------------------
