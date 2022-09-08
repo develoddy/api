@@ -11,11 +11,8 @@ router.post('/create', middlewares.checkToken, commentController.create);
 // READ
 router.get('/read/:postId/:page?', middlewares.checkToken, commentController.read);
 
-// READ
-//router.get('/:page?', middlewares.checkToken, userController.getUsers);
-
 // UPDATE
-//router.put('/:userId', middlewares.checkToken, userController.update);
+router.put('/update', middlewares.checkToken, commentController.update);
 
 // DELETE
 router.delete('/delete/:id', middlewares.checkToken, commentController.delete);

@@ -11,7 +11,7 @@ const FollowModel = require("./models/follow");
 // const SentimentalModel  = require('./models/sentimental');
 // const AlbumModel        = require('./models/album');
 // const PostImageModel    = require('./models/postimage');
-// const HeartModel        = require('./models/heart');
+const HeartModel        = require('./models/heart');
 const CommentModel      = require('./models/comment');
 // const FriendModel       = require('./models/friend');
 const ConversationModel = require('./models/conversation');
@@ -38,7 +38,7 @@ const Follow = FollowModel(sequelize, Sequelize);
 // const Sentimental = SentimentalModel(sequelize, Sequelize);
 // const Album       = AlbumModel(sequelize, Sequelize);
 // const PostImage   = PostImageModel(sequelize, Sequelize);
-// const Heart       = HeartModel(sequelize, Sequelize);
+const Heart       = HeartModel(sequelize, Sequelize);
 const Comment     = CommentModel(sequelize, Sequelize);
 // const Friend      = FriendModel(sequelize, Sequelize);
 const Conversation= ConversationModel(sequelize, Sequelize);
@@ -310,6 +310,13 @@ const comments = [
       { type_id: 0, ref_id: 0, user_id: 0, content: "otro", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 4, userId: 1, commentId: 1 },
 ];
 
+
+const likes = [
+      { type_id: 10, ref_id: 9, user_id: 1, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23"},
+      { type_id: 10, ref_id: 9, user_id: 2, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23"},
+      { type_id: 10, ref_id: 9, user_id: 3, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23"},
+      { type_id: 10, ref_id: 8, user_id: 1, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23"},
+];
 
 // AUTHENTICATE
 // Conectarse a la base de datos.
@@ -705,6 +712,9 @@ sequelize
                   }
             );
       })
+      .then(() => {
+            likes.forEach((likes) => Heart.create( likes ) );
+      })
 
       .catch((err) => {
             console.log("No se conecto a la Base de datos.");
@@ -788,6 +798,16 @@ Comment.belongsTo(Post)
 Comment.belongsTo(User);
 Comment.belongsTo(Comment);
 
+// LIKE
+Post.hasMany(Heart, {foreignKey: 'ref_id'});
+User.hasMany(Heart, {foreignKey: 'user_id'});
+//Comment.hasMany(Heart, {foreignKey: 'ref_id'});
+//Post.hasMany(Heart, {foreignKey: 'ref_id'});
+
+Heart.belongsTo(Post, {foreignKey: 'ref_id'})
+Heart.belongsTo(User, {foreignKey: 'user_id'})
+//Heart.belongsTo(Post, {foreignKey: 'ref_id'})
+
 // EXPORTACION
 module.exports = {
       Profile,
@@ -797,5 +817,6 @@ module.exports = {
       Follow,
       Conversation,
       Message,
-      Comment
+      Comment, 
+      Heart
 };

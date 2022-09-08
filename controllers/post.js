@@ -4,7 +4,7 @@ const router = require("express").Router();
 const path = require("path");
 const fs = require("fs");
 const moment = require("moment");
-const { Post, User, Follow, PostImage, Image, Profile, Comment } = require("../db");
+const { Post, User, Follow, PostImage, Image, Profile, Comment, Heart } = require("../db");
 const { Op } = require("sequelize");
 
 const getPagination = (page, size) => {
@@ -110,9 +110,6 @@ exports.posts = async (req, res) => {
 
             follows_clean.push(req.userId);
 
-
-            
-
             const posts = await Post.findAndCountAll({
                   include: [{
                         model: User,
@@ -135,9 +132,16 @@ exports.posts = async (req, res) => {
                               }]
                         }],
                         attributes: ["id", "userId", "commentId", "content" ],
-                        offset: 0,
-                        limit : 2,
+                        //offset: 0,
+                        //limit : 2,
                         
+                  },{
+                        model: Heart,
+                        attributes: ["ref_id", "user_id"],
+                        include: [{
+                              model: User,
+                              attributes: ["id", "name", "username", "email"],
+                        }]
                   }],
                   attributes: ["id", "content", "created_at"],
                   where: { userId: follows_clean },
@@ -262,9 +266,6 @@ exports.postsUser = async (req, res) => {
                   });
       }
 };
-
-
-
 
 
 
@@ -395,60 +396,6 @@ exports.post = async (req, res) => {
  * @returns 
  */
  exports.postPaginate = async (req, res) => {
-
-      /*try {
-            var userId = req.userId;
-
-            if (req.params.user_id) {
-                  userId = req.params.user_id;
-            }
-
-            if (req.params.page) {
-                  page = req.params.page;
-            }
-
-            var page = 0;
-
-            var size = 1;
-
-            const { limit, offset } = getPagination(page, size);
-
-            const post = await Post.findAndCountAll({
-                  include: [{
-                        model: User,
-                        attributes: ["id", "username"],
-                        include: [{
-                              model: Profile,
-                              attributes: ["bio", "image_header"]
-                        }]
-                  }, {
-                        model: Image,
-                        attributes: ["id", "title", "content", "marginLeft", "link"],
-                  }],
-                  attributes: ["id", "content"],
-                  where: { id: req.params.id_post , userId: userId },
-                  order: [["id", "DESC"]],
-                  limit,
-                  offset,
-            });
-
-            const response = getPagingData(post, page, limit);
-
-            res.json(response);
-
-      } catch (err) {
-            console.log(err);
-            return res
-                  .status(500)
-                  .send({
-                        message: "Backeden Post: Error al devolver posts...",
-                  });
-      }*/
-
-
-
-
-
       try {
             var userId = req.userId;
 
@@ -615,22 +562,3 @@ exports.upload = async (req, res) => {
             });
       }
 };
-
-
-// exports.post = async (req, res) => {
-//       try {
-//             const post = await Post.findOne({
-//                   where: { id: req.params.id },
-//             });
-//             if (!post) {
-//                   return res
-//                         .status(404)
-//                         .send({ message: "No existe la publicación" });
-//             }
-//             return res.status(200).send({ post });
-//       } catch (err) {
-//             return res
-//                   .status(500)
-//                   .send({ message: "Error al devolver la publiación" });
-//       }
-// };
