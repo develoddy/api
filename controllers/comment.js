@@ -100,6 +100,7 @@ exports.read = async ( req, res ) => {
                 }],
             }],
             attributes: ["id", "postId", "userId", "content"],
+            where: { postId: req.params.postId },
             //order: [["id", "ASC"]],
             limit,
             offset,
