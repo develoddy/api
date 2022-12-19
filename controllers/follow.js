@@ -88,6 +88,27 @@ exports.getFollowindUsers = async (req, res) => {
         //     res.status(500).send({message: err.message || "Some error occurred while retrieving follows."});
         // });
 
+        // Follow.findAndCountAll({
+        //     include: [{
+        //         model: User,
+        //         attributes: ["id", "name"],
+        //         include: [{
+        //             model: Profile,
+        //             attributes: ["bio", "image_header"]
+        //         }]
+        //     }],
+        //     where: { user_id: userId }, limit, offset })
+        // .then(data => {
+        //         const response = getPagingData(data, page, limit);
+        //         res.send(response);
+        //     })
+        // .catch(err => {
+        //         res.status(500).send({
+        //             message:
+        //             err.message || "Some error occurred while retrieving follows."
+        //         });
+        // });
+
        
         await Follow.findAndCountAll({ 
             where: { user_id: userId }
@@ -114,6 +135,7 @@ exports.getFollowindUsers = async (req, res) => {
                     err.message || "Some error occurred while retrieving follows."
                 });
         });
+
     } catch (err) {
         console.log(err);
         res.json('Error pagination follows');
@@ -149,10 +171,14 @@ exports.getFollowedUsers = async (req, res) => {
 
         const { limit, offset } = getPagination(page, size);
 
-        /*Follow.findAndCountAll({
+        Follow.findAndCountAll({
             include: [{
                 model: User,
                 attributes: ["id", "name"],
+                include: [{
+                    model: Profile,
+                    attributes: ["bio", "image_header"]
+                }]
             }],
             where: { followed_id: userId }, limit, offset })
         .then(data => {
@@ -164,9 +190,9 @@ exports.getFollowedUsers = async (req, res) => {
                     message:
                     err.message || "Some error occurred while retrieving follows."
                 });
-        });*/
+        });
 
-        await Follow.findAndCountAll({ 
+        /*await Follow.findAndCountAll({ 
             where: { followed_id: userId }
         }).then(data => {
                 var array_clean = [];
@@ -190,7 +216,7 @@ exports.getFollowedUsers = async (req, res) => {
                     message:
                     err.message || "Some error occurred while retrieving follows."
                 });
-        });
+        });*/
 
     } catch (err) {
         res.json('Error pagination follows');
@@ -228,7 +254,11 @@ exports.getMyFollows = async (req, res) => {
                 where: { followed_id: userId },
                 include: [{
                     model: User,
-                    attributes: ["id", "name"],
+                    attributes: ["id", "name", "username"],
+                    include: [{
+                        model: Profile,
+                        attributes: ["bio", "image_header"]
+                    }]
                 }],
             });
         }

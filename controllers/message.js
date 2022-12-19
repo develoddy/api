@@ -135,6 +135,7 @@ exports.createConversation = async (req, res) => {
                 include: [{
                     model: Profile,
                     attributes: ["image_header"],
+                    where: { userId: userId}
                 }],
                 attributes: ["id", "name", "email"]
             },{
@@ -147,6 +148,7 @@ exports.createConversation = async (req, res) => {
             }],
             attributes: ["sender_id", "receptor_id"],
             where: { receptor_id: userId}, limit, offset,
+            // where: { sender_id: userId}, limit, offset,
             order: [["id", "DESC"]], 
         }).then(data => {
             const response = getPagingData(data, page, limit);

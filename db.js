@@ -18,8 +18,16 @@ const MessageModel      = require('./models/message');
 // const NotificationModel = require('./models/notification');
 // const TeamModel         = require('./models/team');
 
-const sequelize = new Sequelize("redsocial", "develoddy", "$$developer20", {
+/*const sequelize = new Sequelize("redsocial", "develoddy", "$$developer20", {
       host: "192.168.64.6",
+      dialect: "mysql",
+      define: {
+            timestamps: false,
+      },
+});*/
+
+const sequelize = new Sequelize("redsocial", "root", "", {
+      host: "localhost",
       dialect: "mysql",
       define: {
             timestamps: false,
@@ -66,12 +74,12 @@ const profiles = [
       {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "jordan.jpeg", title: "", bio: "Bio Jordan", likes: "", dislikes: "", address: "", phone: "",public_email: "jordan@gmail.com",user_id: 2,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 2,},
       {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "chingo.jpeg", title: "", bio: "Bio Chingo", likes: "", dislikes: "", address: "", phone: "",public_email: "chingo@gmail.com",user_id: 3,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 3,},
       {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "paola.jpeg", title: "", bio: "Bio Paola", likes: "", dislikes: "", address: "", phone: "",public_email: "paola@gmail.com",user_id: 4,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 4,},
-      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpeg", title: "", bio: "Bio Pepito", likes: "", dislikes: "", address: "", phone: "",public_email: "pepito@gmail.com",user_id: 5,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 5,},
-      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpeg", title: "", bio: "Bio juanito", likes: "", dislikes: "", address: "", phone: "",public_email: "juanito@gmail.com",user_id: 6,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 6,},
-      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpeg", title: "", bio: "Bio Mendito", likes: "", dislikes: "", address: "", phone: "",public_email: "mendito@gmail.com",user_id: 7,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 7,},
-      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpeg", title: "", bio: "Bio Paquito", likes: "", dislikes: "", address: "", phone: "",public_email: "paquito@gmail.com",user_id: 8,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 8,},
-      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpeg", title: "", bio: "Bio Lolita", likes: "", dislikes: "", address: "", phone: "",public_email: "lolita@gmail.com",user_id: 9,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 9,},
-      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpeg", title: "", bio: "Bio Luna", likes: "", dislikes: "", address: "", phone: "",public_email: "luna@gmail.com",user_id: 10,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 10,},
+      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpg", title: "", bio: "Bio Pepito", likes: "", dislikes: "", address: "", phone: "",public_email: "pepito@gmail.com",user_id: 5,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 5,},
+      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpg", title: "", bio: "Bio juanito", likes: "", dislikes: "", address: "", phone: "",public_email: "juanito@gmail.com",user_id: 6,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 6,},
+      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpg", title: "", bio: "Bio Mendito", likes: "", dislikes: "", address: "", phone: "",public_email: "mendito@gmail.com",user_id: 7,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 7,},
+      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpg", title: "", bio: "Bio Paquito", likes: "", dislikes: "", address: "", phone: "",public_email: "paquito@gmail.com",user_id: 8,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 8,},
+      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpg", title: "", bio: "Bio Lolita", likes: "", dislikes: "", address: "", phone: "",public_email: "lolita@gmail.com",user_id: 9,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 9,},
+      {day_of_birth: "2021-12-26 21:47:23", gender: "", country_id: 0, image: "", image_header: "profile.jpg", title: "", bio: "Bio Luna", likes: "", dislikes: "", address: "", phone: "",public_email: "luna@gmail.com",user_id: 10,level_id: 0,sentimental_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 10,},
 ];
 
 // IMAGENES
@@ -113,9 +121,11 @@ const messages = [
 
 // COMENTARIOS
 const comments = [
-      { type_id: 0, ref_id: 0, user_id: 0, content: "Hola eddy", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 2, userId: 2, commentId: 1 }, 
-      { type_id: 0, ref_id: 0, user_id: 0, content: "Hola jordan", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 2, userId: 1, commentId: 1 },
-      { type_id: 0, ref_id: 0, user_id: 0, content: "otro", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 4, userId: 1, commentId: 1 },
+      // Jordan a comenta a la publicacion de Eddy.
+      //{ type_id: 0, ref_id: 0, user_id: 0, content: "Hola eddy", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 1, userId: 2, commentId: 1 }, 
+      //{ type_id: 0, ref_id: 0, user_id: 0, content: "Esta chevere tu foto", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 1, userId: 2, commentId: 2 },
+      //{ type_id: 0, ref_id: 0, user_id: 0, content: "Hola Eddy soy Paola", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 1, userId: 4, commentId: 3 },
+      //{ type_id: 0, ref_id: 0, user_id: 0, content: "Hola Eddy soy Paola", comment_id: 0, created_at: "2021-12-26 20:47:23", updated_at: "2021-12-26 20:47:23", postId: 2, userId: 4, commentId: 4 }
 ];
 
 // LIKES
@@ -158,10 +168,13 @@ sequelize.sync({ force: true })
       .then(() => {
             messages.forEach((message) => Message.create(message) );
       })
+      .then(() => {
+            comments.forEach((comment) => Comment.create(comment) );
+      })
       .then(async () => {
             let post1 = await Post.create(
                   {title: "",content: "Publicacion 1 de Eddy con 1 sola imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-02.jpg",title: "imag-02.jpg",content: "69f",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-02.jpg",title: "imag-02.jpg",content: "69f",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23", userId:1 }],
                   },
                   {include: [{model: Image,},],}
             );
@@ -169,29 +182,29 @@ sequelize.sync({ force: true })
             let post2 = await Post.create(
                   {title: "",content: "Publicacion 2 de Eddy con 2 imagenes, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
                         images: [
-                        {src: "public/posts/imag-03.jpg",title: "imag-03.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}, 
-                        {src: "public/posts/imag-04.jpg",title: "imag-04.jpg",content: "b02",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        {src: "public/posts/imag-03.jpg",title: "imag-03.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}, 
+                        {src: "public/posts/imag-04.jpg",title: "imag-04.jpg",content: "b02",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             let post3 = await Post.create(
                   {title: "",content: "Publicacion 3 de Eddy con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-05.jpg",title: "imag-05.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-05.jpg",title: "imag-05.jpg",content: "32b", user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             let post4 = await Post.create(
                   {title: "",content: "Publicacion 4 de Eddy con 1 imagen, haciendo pruebas para ver como se ve en el entorno de desarrollo y espero que les guste a todos.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             let post5 = await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 2,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 2,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 2,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:2}],
                   },
                   {include: [{model: Image,},],}
             );
@@ -200,42 +213,42 @@ sequelize.sync({ force: true })
 
             await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 1,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
 
             await Post.create(
                   {title: "",content: "Publicacion 5 xxx.",lat: 0,lng: 0,start_at: "2021-12-26 21:47:23",finish_at: "2021-12-26 21:47:23",receptor_type_id: 0,author_ref_id: 2,receptor_ref_id: 0,level_id: 0,post_type_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId: 1,
-                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 0,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",}],
+                        images: [{src: "public/posts/imag-06.jpg",title: "imag-06.jpg",content: "32b",user_id: 1,level_id: 0,album_id: 0,created_at: "2021-12-26 21:47:23",updated_at: "2021-12-26 21:47:23",userId:1}],
                   },
                   {include: [{model: Image,},],}
             );
@@ -276,6 +289,11 @@ Post.belongsToMany(Image, { through: PostImage});
 Image.belongsToMany(Post, { through: PostImage});
 PostImage.belongsTo(Post);
 PostImage.belongsTo(Image);
+
+//1aN
+User.hasMany(Image);
+Image.belongsTo(User);
+
 
 // Follow
 // 1aN

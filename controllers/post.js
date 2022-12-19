@@ -145,8 +145,6 @@ exports.posts = async (req, res) => {
 
             var size = 2;
 
-            
-
             const follow = await Follow.findAll({
                   include: [{
                         model: User,
@@ -414,6 +412,62 @@ exports.postsImagesUser = async (req, res) => {
                   });
       }
 }
+
+
+exports.imagesProfile = async (req, res) => {
+      try {
+            
+            var userId = req.userId;
+
+            var page = 0;
+
+            if ( req.params.page ) {
+                  page = req.params.page;
+            }
+
+            var size = 5;
+
+            const { limit, offset } = getPagination(page, size);
+            
+            const images = await Image.findAndCountAll({
+                  include: [{
+                        model: User,
+                        attributes: ["id", "username"],
+                        include: [{
+                              model: Profile,
+                              attributes: ["bio", "image_header"]
+                        }]
+                  }],
+                  attributes: ["title", "content"],
+                  where: { userId: req.userId },
+                  order: [["id", "DESC"]],
+                  limit,
+                  offset,
+            });
+
+           
+
+            const response = getPagingData(images, page, limit);
+
+            /*var images_clean = [];
+            response.posts.forEach(( element ) => {
+                  images_clean.push(element.images);
+            });*/
+            //res.json(images_clean);
+
+            res.json(response);
+
+            
+      } catch (err) {
+            console.log(err);
+            return res
+                  .status(500)
+                  .send({
+                        message: "Backeden Post: Error al devolver posts...",
+                  });
+      }
+}
+
 
 /**
  * FIND ONE POST BY ID

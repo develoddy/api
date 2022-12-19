@@ -21,5 +21,7 @@ router.delete('/delete/:id/:postId', middlewares.checkToken, postController.dele
 router.put('/update', middlewares.checkToken, postController.update);
 router.get('/checkIfLikesExist/:postId/:userId', middlewares.checkToken, postController.checkIfLikesExist);
 
+router.get('/imagesAll/:page', middlewares.checkToken, postController.imagesProfile);
+
 
 module.exports = router;
